@@ -12,6 +12,7 @@ const leaderboardRoutes = require('./routes/leaderboardRoutes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// connect to MongoDB
 connectDB();
 
 app.use(express.json());
@@ -27,7 +28,12 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
+// 🔹 Only start the listener when running locally (not on Vercel)
+if (process.env.VERCEL !== '1') {
+    app.listen(PORT, () => {
+        console.log(`Server running on http://localhost:${PORT}`);
+    });
+}
 
+// 🔹 Export the app so Vercel can use it as a handler
+module.exports = app;
