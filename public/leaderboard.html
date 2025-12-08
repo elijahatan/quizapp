@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Leaderboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Top 10 Players</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Rank</th>
+            <th>Username</th>
+            <th>Best Score</th>
+        </tr>
+        </thead>
+        <tbody id="leaderboard-body">
+        </tbody>
+    </table>
+
+    <p id="message"></p>
+
+    <div class="section">
+        <a href="quiz.html" class="btn btn-pink">Play Quiz</a>
+        <a href="profile.html" class="btn btn-green">Profile</a>
+        <a href="index.html" class="btn btn-primary">Home</a>
+    </div>
+</div>
+
+<script>
+    async function loadLeaderboard() {
+        try {
+            const res = await fetch('/api/leaderboard/top10');
+            if (!res.ok) {
+                document.getElementById('message').style.color = 'salmon';
+                document.getElementById('message').textContent =
+                    'Error loading leaderboard.';
+                return;
+            }
+
+            const data = await res.json();
+
+            const tbody = document.getElementById('leaderboard-body');
+            tbody.innerHTML = '';
+
+            data.forEach((entry, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${idx + 1}</td>
+                    <td>${entry.username}</td>
+                    <td>${entry.bestScore}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        } catch (err) {
+            console.error(err);
+            const msg = document.getElementById('message');
+            msg.style.color = 'salmon';
+            msg.textContent = 'Error loading leaderboard.';
+        }
+    }
+
+    loadLeaderboard();
+</script>
+</body>
+</html>

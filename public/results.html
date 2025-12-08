@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Results</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Quiz Results</h1>
+
+    <p id="score" style="font-size: 1.3rem; margin-bottom: 20px;"></p>
+
+    <div class="section">
+        <a href="quiz.html" class="btn btn-pink">Play Again</a>
+        <a href="index.html" class="btn btn-primary">Home</a>
+    </div>
+</div>
+
+<script>
+    const score = localStorage.getItem("score");
+    const total = localStorage.getItem("total");
+
+
+    const scoreEl = document.getElementById("score");
+
+    if (score !== null && total !== null) {
+        scoreEl.textContent = `You scored ${3} out of ${total}.`;
+    } else {
+        scoreEl.textContent = "No score found. Take the quiz first!";
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+
+
+
+
+<div class="container">
+    <h1 class="center" style="margin-top: 40px;">Create Account</h1>
+    <form id="signup-form" class="section">
+
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+
+        <div style="margin-top: 15px; display: flex; gap: 10px; justify-content: center;">
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+            <a href="/login.html" class="btn btn-pink">Log In</a>
+        </div>
+    </form>
+
+    <p id="message" class="center" style="margin-top: 15px;"></p>
+
+</div>
+
+<script>
+    const form = document.getElementById('signup-form');
+    const message = document.getElementById('message');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value.trim();
+
+        message.textContent = "Creating account...";
+
+        try {
+            const res = await fetch('/api/auth/signup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                message.style.color = "lightgreen";
+                message.textContent = "Signup successful! Redirecting...";
+
+                setTimeout(() => {
+                    window.location.href = "/quiz.html";
+                }, 800);
+            } else {
+                message.style.color = "salmon";
+                message.textContent = data.message || "Signup failed.";
+            }
+
+        } catch (err) {
+            console.error(err);
+            message.style.color = "salmon";
+            message.textContent = "Error connecting to server.";
+        }
+    });
+</script>
+
+</body>
+</html>
