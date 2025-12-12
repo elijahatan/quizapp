@@ -53,6 +53,9 @@ button, .btn {
 .btn-primary { background: #6366f1; }
 .btn-primary:hover { background: #4f46e5; }
 
+.btn-primary { background: #FDFD96; }
+.btn-primary:hover { background: #8B8000; }
+
 .btn-green { background: #10b981; }
 .btn-green:hover { background: #059669; }
 
