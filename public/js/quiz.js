@@ -8,6 +8,10 @@ async function loadQuiz() {
         return;
     }
     questions = await res.json();
+
+    console.log("SAMPLE QUESTION:", questions[0]);
+
+
     renderQuiz();
 }
 
