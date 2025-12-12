@@ -52,8 +52,18 @@
             const data = await res.json();
 
             if (res.ok) {
+                const token = data.token || data.accessToken || data.jwt;
+                if (token) {
+                    localStorage.setItem('token', token);
+                } else {
+                    console.warn("Login succeeded but no token was returned:", data);
+                }
+
+                localStorage.setItem('username', data.username || username);
+
                 message.style.color = 'lightgreen';
                 message.textContent = 'Login successful! Redirecting to quiz...';
+
                 window.location.href = '/quiz.html';
             } else {
                 message.style.color = 'salmon';
@@ -68,4 +78,3 @@
 </script>
 </body>
 </html>
-
